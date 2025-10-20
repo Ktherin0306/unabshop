@@ -24,6 +24,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,7 +42,12 @@ import androidx.compose.ui.unit.sp
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onClickRegister : () -> Unit = {}) {
+
+    //ESTADOS
+    var inputEmail by remember { mutableStateOf("") }
+    var inputPassword by remember { mutableStateOf("") }
+
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
@@ -69,8 +78,8 @@ fun LoginScreen() {
 
             // Campo de Correo Electrónico
             OutlinedTextField(
-                value = "", // Valor vacío (sin estado)
-                onValueChange = {},
+                value = inputEmail, // Valor vacío (sin estado)
+                onValueChange = {inputEmail = it},
                 label = { Text("Correo Electrónico") },
                 leadingIcon = {
                     Icon(
@@ -89,8 +98,8 @@ fun LoginScreen() {
 
             // Campo de Contraseña
             OutlinedTextField(
-                value = "", // Valor vacío (sin estado)
-                onValueChange = {},
+                value = inputPassword, // Valor vacío (sin estado)
+                onValueChange = {inputPassword = it},
                 label = { Text("Contraseña") },
                 leadingIcon = {
                     Icon(
@@ -126,7 +135,9 @@ fun LoginScreen() {
             }
             Spacer(modifier = Modifier.height(16.dp))
             // Enlace para Registrarse
-            TextButton(onClick = {}) {
+            TextButton(onClick = {
+                onClickRegister()
+            }) {
                 Text(
                     text = "¿No tienes una cuenta? Regístrate",
                     color = Color(0xFFFF9900)
