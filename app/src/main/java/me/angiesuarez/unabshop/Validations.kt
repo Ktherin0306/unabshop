@@ -1,5 +1,6 @@
 package me.angiesuarez.unabshop
 
+import android.util.Patterns
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -47,17 +48,37 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            NavigationAPP()
-        }
+fun validateEmail(email: String): Pair<Boolean, String> {
+    return when {
+        email.isEmpty() -> Pair(false, "El correo es requerido")
+        !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> Pair(false, "El correo es inválido")
+        !email.endsWith("@test.com") -> Pair(false, "Ese email no es corporativo")
+        else -> Pair(true, "")
+    }
+}
+
+fun validatePassword(password: String): Pair<Boolean, String> {
+    return when {
+        password.isEmpty() -> Pair(false, "La contraseña es requerida")
+        password.length < 6 -> Pair(false, "La contraseña debe tener al menos 6 caracteres")
+        !password.any { it.isDigit() } -> Pair(false, "La contraseña debe tener al menos un dígito")
+        else -> Pair(true, "")
+    }
+}
+
+fun validateName(name: String): Pair<Boolean, String> {
+    return when {
+        name.isEmpty() -> Pair(false, "El nombre es requerido")
+        name.length < 6 -> Pair(false, "El nombre debe tener al menos 6 caracteres")
+        else -> Pair(true, "")
+    }
+}
+
+fun validateConfirmPassword(password: String, confirmPassword: String): Pair<Boolean, String> {
+    return when {
+        confirmPassword.isEmpty() -> Pair(false, "La contraseña es requerida")
+        confirmPassword != password -> Pair(false, "Las contraseñas no coinciden")
+        else -> Pair(true, "")
     }
 }
