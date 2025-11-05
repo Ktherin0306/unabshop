@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -60,9 +61,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // navigation
-        implementation("androidx.navigation:navigation-compose:2.9.5")
+    implementation(libs.androidx.navigation.compose)
     // firebase
-    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
+    //firestone
+    implementation(libs.firebase.firestore)
+    //implementation(libs.firebase.analytics.ktx)
     //auth
     implementation(libs.firebase.auth)
     }
